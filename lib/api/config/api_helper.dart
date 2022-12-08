@@ -9,7 +9,7 @@ import 'api_exception.dart';
 
 class ApiHelper {
   final String _baseUrl = ApiConstant.url;
-  Future<dynamic> get({required String url, header}) async {
+  Future<dynamic> getAndSearch({required String url, header}) async {
     print('Api Get, url $url');
     var responseJson;
     try {
@@ -53,6 +53,21 @@ class ApiHelper {
       throw FetchDataException('No Internet connection');
     }
     print('api put recieved!');
+    return responseJson;
+  }
+
+  Future<dynamic> delete({required String url, required header}) async {
+    print('Api delete, url $url');
+    var responseJson;
+    try {
+      final response =
+          await http.delete(Uri.parse(_baseUrl + url), headers: header);
+      responseJson = _returnResponse(response);
+    } on SocketException {
+      print('No net');
+      throw FetchDataException('No Internet connection');
+    }
+    print('api delete recieved!');
     return responseJson;
   }
 

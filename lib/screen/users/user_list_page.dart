@@ -16,6 +16,7 @@ class UserListPage extends StatefulWidget {
 
 class _UserListPageState extends State<UserListPage> {
   List<User?> users = [];
+  bool searchBoolean = false; //add
 
   @override
   void initState() {
@@ -43,20 +44,30 @@ class _UserListPageState extends State<UserListPage> {
         users = snapshot.data!;
         return Scaffold(
           appBar: AppBar(
-            title: const Text("List Users"),
-            actions: [
-              IconButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const AddUserPage(),
-                        fullscreenDialog: true,
-                      ),
-                    );
-                  },
-                  icon: const Icon(Icons.add))
-            ],
+            title: searchBoolean ? searchTextField() : const Text("List Users"),
+            actions: searchBoolean
+                ? null
+                : [
+                    IconButton(
+                        icon: const Icon(Icons.search),
+                        onPressed: () {
+                          setState(() {
+                            //add
+                            searchBoolean = true;
+                          });
+                        }),
+                    IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const AddUserPage(),
+                              fullscreenDialog: true,
+                            ),
+                          );
+                        },
+                        icon: const Icon(Icons.add))
+                  ],
           ),
           body: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -81,6 +92,39 @@ class _UserListPageState extends State<UserListPage> {
         );
       },
       // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+
+  Widget searchTextField() {
+    return Row(
+      children: const [
+        TextField(
+          autofocus: true, //Display the keyboard when TextField is displayed
+          cursorColor: Colors.white,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+          ),
+          textInputAction: TextInputAction
+              .search, //Specify the action button on the keyboard
+          decoration: InputDecoration(
+            //Style of TextField
+            enabledBorder: UnderlineInputBorder(
+                //Default TextField border
+                borderSide: BorderSide(color: Colors.white)),
+            focusedBorder: UnderlineInputBorder(
+                //Borders when a TextField is in focus
+                borderSide: BorderSide(color: Colors.white)),
+            hintText:
+                'Search', //Text that is displayed when nothing is entered.
+            hintStyle: TextStyle(
+              //Style of hintText
+              color: Colors.white60,
+              fontSize: 20,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

@@ -5,6 +5,7 @@ void main() {
   runApp(const MyApp());
 }
 
+// data are generate from api: https://jsonplaceholder.typicode.com/
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 

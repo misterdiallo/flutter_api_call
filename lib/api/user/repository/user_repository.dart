@@ -7,7 +7,7 @@ import 'package:flutter_api_call/api/user/model/user_model.dart';
 class UserRepository {
   static Future<List<User>> getAllUsers() async {
     // await Future.delayed(const Duration(seconds: 2));
-    final response = await ApiHelper().get(url: 'users');
+    final response = await ApiHelper().getAndSearch(url: 'users');
     if (response != null) {
       final userList = <User>[];
       for (var item in response) {
@@ -21,7 +21,7 @@ class UserRepository {
 
   static Future<User?> getOneUser({required id}) async {
     // await Future.delayed(const Duration(seconds: 2));
-    final response = await ApiHelper().get(url: 'users/$id');
+    final response = await ApiHelper().getAndSearch(url: 'users/$id');
     if (response != null) {
       return User.fromJson(response);
     } else {
@@ -52,6 +52,37 @@ class UserRepository {
       return returnResponse;
     } else {
       return returnResponse;
+    }
+  }
+
+  static Future<User?> deleteUser({required User user, required id}) async {
+    // await Future.delayed(const Duration(seconds: 2));
+    User? returnResponse;
+    final response = await ApiHelper().delete(
+      url: 'users/$id',
+      header: ApiConstant.header,
+    );
+    if (response != null) {
+      returnResponse = response;
+      return returnResponse;
+    } else {
+      return returnResponse;
+    }
+  }
+
+  static Future<List<User>> searchUser(
+      {required String type, required keyword}) async {
+    // await Future.delayed(const Duration(seconds: 2));
+    final response =
+        await ApiHelper().getAndSearch(url: 'users?$type=$keyword');
+    if (response != null) {
+      final userList = <User>[];
+      for (var item in response) {
+        userList.add(User.fromJson(item));
+      }
+      return userList;
+    } else {
+      return [];
     }
   }
 }
