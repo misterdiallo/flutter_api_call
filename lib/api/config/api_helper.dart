@@ -3,16 +3,18 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'package:responsive_login/api/api_constant.dart';
-import 'package:responsive_login/api/api_exception.dart';
+
+import 'api_constant.dart';
+import 'api_exception.dart';
 
 class ApiHelper {
   final String _baseUrl = ApiConstant.url;
-  Future<dynamic> get({required String url}) async {
+  Future<dynamic> get({required String url, header}) async {
     print('Api Get, url $url');
     var responseJson;
     try {
-      final response = await http.get(Uri.parse(_baseUrl + url));
+      final response =
+          await http.get(Uri.parse(_baseUrl + url), headers: header);
       responseJson = _returnResponse(response);
     } on SocketException {
       print('No net');
@@ -42,7 +44,6 @@ class ApiHelper {
     switch (response.statusCode) {
       case 200:
         var responseJson = json.decode(response.body.toString());
-        print(responseJson);
         return responseJson;
       case 400:
         throw BadRequestException(response.body.toString());
