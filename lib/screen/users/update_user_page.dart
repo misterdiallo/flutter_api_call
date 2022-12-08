@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_api_call/api/user/model/user_model.dart';
-import 'package:flutter_api_call/api/user/repository/user_repository.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
-class AddUserPage extends StatefulWidget {
-  const AddUserPage({super.key});
+import 'package:flutter_api_call/api/user/model/user_model.dart';
+import 'package:flutter_api_call/api/user/repository/user_repository.dart';
+
+class UpdateUserPage extends StatefulWidget {
+  User user;
+  UpdateUserPage({
+    Key? key,
+    required this.user,
+  }) : super(key: key);
 
   @override
-  State<AddUserPage> createState() => _AddUserPageState();
+  State<UpdateUserPage> createState() => _UpdateUserPageState();
 }
 
-class _AddUserPageState extends State<AddUserPage> {
+class _UpdateUserPageState extends State<UpdateUserPage> {
   bool shouldPop = true;
   final _formKey = GlobalKey<FormBuilderState>();
   @override
@@ -27,10 +32,11 @@ class _AddUserPageState extends State<AddUserPage> {
 
   @override
   Widget build(BuildContext context) {
+    User user = widget.user;
     return WillPopScope(
         child: Scaffold(
           appBar: AppBar(
-            title: const Text("New user"),
+            title: Text("Update: ${user.name}"),
             actions: [
               IconButton(
                   onPressed: () => saving(), icon: const Icon(Icons.save_as))
@@ -44,12 +50,28 @@ class _AddUserPageState extends State<AddUserPage> {
                   children: <Widget>[
                     FormBuilder(
                       key: _formKey,
+                      initialValue: {
+                        'name': user.name,
+                        'username': user.name,
+                        'email': user.name,
+                        'street': user.address.suite,
+                        'suite': user.address.suite,
+                        'city': user.address.city,
+                        'zip': user.address.zipcode,
+                        'lat': user.address.geo.lat,
+                        'lng': user.address.geo.lng,
+                        'phone': user.phone,
+                        'website': user.website,
+                        'cpname': user.company.name,
+                        'catchPhrase': user.company.catchPhrase,
+                        'bs': user.company.bs,
+                      },
                       onChanged: () {
                         _formKey.currentState!.save();
                         // debugPrint(_formKey.currentState!.value.toString());
                       },
                       autovalidateMode: AutovalidateMode.disabled,
-                      autoFocusOnValidationFailure: true,
+                      skipDisabled: true,
                       child: Column(
                         children: <Widget>[
                           const SizedBox(height: 15),
@@ -298,7 +320,7 @@ class _AddUserPageState extends State<AddUserPage> {
           phone: fields['phone'],
           website: fields['website'],
           company: company);
-      await UserRepository.createUser(user: newUser)
+      await UserRepository.updateUser(user: newUser, id: widget.user.id)
           .onError((error, stackTrace) {
         Loader.hide();
         showDialog(
@@ -317,7 +339,6 @@ class _AddUserPageState extends State<AddUserPage> {
         return null;
       }).then((value) {
         Loader.hide();
-        print('response value type: ${value.runtimeType}');
         if (value.runtimeType == User) {
           Navigator.pop(context);
         }

@@ -36,7 +36,23 @@ class ApiHelper {
       print('No net');
       throw FetchDataException('No Internet connection');
     }
-    print('api get recieved!');
+    print('api post recieved!');
+    return responseJson;
+  }
+
+  Future<dynamic> put(
+      {required String url, required body, required header}) async {
+    print('Api put, url $url');
+    var responseJson;
+    try {
+      final response = await http.put(Uri.parse(_baseUrl + url),
+          headers: header, body: body);
+      responseJson = _returnResponse(response);
+    } on SocketException {
+      print('No net');
+      throw FetchDataException('No Internet connection');
+    }
+    print('api put recieved!');
     return responseJson;
   }
 

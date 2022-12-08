@@ -25,7 +25,7 @@ class _UserListPageState extends State<UserListPage> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<User?>>(
-      stream: Stream.fromFuture(UserRepository.fetchUserList()),
+      stream: Stream.fromFuture(UserRepository.getAllUsers()),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Scaffold(

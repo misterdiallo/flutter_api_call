@@ -3,6 +3,7 @@ import 'package:flutter_api_call/api/user/model/user_model.dart';
 
 import 'package:flutter_api_call/api/user/repository/user_repository.dart';
 import 'package:flutter_api_call/screen/error_page.dart';
+import 'package:flutter_api_call/screen/users/update_user_page.dart';
 
 class UserPage extends StatefulWidget {
   int id;
@@ -19,7 +20,7 @@ class _UserPageState extends State<UserPage> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: Stream.fromFuture(UserRepository.fetchUser(id: widget.id)),
+      stream: Stream.fromFuture(UserRepository.getOneUser(id: widget.id)),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Scaffold(
@@ -40,7 +41,19 @@ class _UserPageState extends State<UserPage> {
           appBar: AppBar(
             title: Text(user.name),
             actions: [
-              IconButton(onPressed: () {}, icon: const Icon(Icons.edit))
+              IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => UpdateUserPage(
+                          user: user,
+                        ),
+                        fullscreenDialog: true,
+                      ),
+                    );
+                  },
+                  icon: const Icon(Icons.edit))
             ],
           ),
           body: SafeArea(
