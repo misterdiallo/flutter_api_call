@@ -4,12 +4,6 @@
 
 import 'dart:convert';
 
-List<User> userFromJson(String str) =>
-    List<User>.from(json.decode(str).map((x) => User.fromJson(x)));
-
-String userToJson(List<User> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
-
 class User {
   User({
     required this.id,
@@ -30,6 +24,10 @@ class User {
   final String phone;
   final String website;
   final Company company;
+
+  factory User.fromRawJson(String str) => User.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["id"],
@@ -69,6 +67,10 @@ class Address {
   final String zipcode;
   final Geo geo;
 
+  factory Address.fromRawJson(String str) => Address.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
   factory Address.fromJson(Map<String, dynamic> json) => Address(
         street: json["street"],
         suite: json["suite"],
@@ -95,6 +97,10 @@ class Geo {
   final String lat;
   final String lng;
 
+  factory Geo.fromRawJson(String str) => Geo.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
   factory Geo.fromJson(Map<String, dynamic> json) => Geo(
         lat: json["lat"],
         lng: json["lng"],
@@ -107,14 +113,19 @@ class Geo {
 }
 
 class Company {
-  final String name;
-  final String catchPhrase;
-  final String bs;
   Company({
     required this.name,
     required this.catchPhrase,
     required this.bs,
   });
+
+  final String name;
+  final String catchPhrase;
+  final String bs;
+
+  factory Company.fromRawJson(String str) => Company.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
 
   factory Company.fromJson(Map<String, dynamic> json) => Company(
         name: json["name"],
