@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_api_call/api/user/repository/user_repository.dart';
 import 'package:flutter_api_call/api/user/model/user_model.dart';
+import 'package:flutter_api_call/screen/users/user_page.dart';
 
 class UserListPage extends StatefulWidget {
   const UserListPage({super.key});
@@ -39,14 +40,14 @@ class _UserListPageState extends State<UserListPage> {
             itemCount: users.length,
             itemBuilder: (context, index) => ListTile(
               onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => UserPage(
-                //       id: users[index].id,
-                //     ),
-                //   ),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => UserPage(
+                      id: users[index].id,
+                    ),
+                  ),
+                );
               },
               title: Text(users[index].name),
               subtitle: Text(users[index].email),

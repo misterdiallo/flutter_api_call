@@ -15,4 +15,14 @@ class UserRepository {
       return [];
     }
   }
+
+  static Future<User?> fetchUser({id}) async {
+    // await Future.delayed(const Duration(seconds: 2));
+    final response = await ApiHelper().get(url: 'users/$id');
+    if (response != null) {
+      return User.fromJson(response);
+    } else {
+      return null;
+    }
+  }
 }
