@@ -40,12 +40,25 @@ class _HomePageState extends State<HomePage> {
                           builder: (context) => const UserListPage()),
                     );
                   },
-                  child: const Text("User List"),
+                  child: const Text("User API"),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //       builder: (context) => const UserListPage()),
+                    // );
+                  },
+                  child: const Text("Photo API"),
                 ),
               ),
               ElevatedButton(
                 onPressed: () {},
-                child: const Text("Another List"),
+                child: const Text("Another API"),
               ),
             ],
           ),

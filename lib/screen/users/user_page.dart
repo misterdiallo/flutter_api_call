@@ -30,9 +30,26 @@ class _UserPageState extends State<UserPage> {
           );
         }
         if (snapshot.hasError) {
-          return ErrorPage(
-            error: snapshot.error.toString(),
-            goBackPage: () => Navigator.pop(context),
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ErrorPage(error: snapshot.error.toString()),
+              TextButton(
+                onPressed: () {
+                  setState(() {});
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Text("Refresh"),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Icon(Icons.refresh_sharp),
+                  ],
+                ),
+              ),
+            ],
           );
         }
         User user = snapshot.data!;
