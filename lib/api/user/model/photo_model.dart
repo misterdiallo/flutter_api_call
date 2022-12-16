@@ -1,27 +1,41 @@
+// To parse this JSON data, do
+//
+//     final photo = photoFromJson(jsonString);
+
+import 'dart:convert';
+
 class Photo {
-  int? albumId;
-  int? id;
-  String? title;
-  String? url;
-  String? thumbnailUrl;
+  Photo({
+    required this.albumId,
+    required this.id,
+    required this.title,
+    required this.url,
+    required this.thumbnailUrl,
+  });
 
-  Photo({this.albumId, this.id, this.title, this.url, this.thumbnailUrl});
+  final int albumId;
+  final int id;
+  final String title;
+  final String url;
+  final String thumbnailUrl;
 
-  Photo.fromJson(Map<String, dynamic> json) {
-    albumId = json['albumId'];
-    id = json['id'];
-    title = json['title'];
-    url = json['url'];
-    thumbnailUrl = json['thumbnailUrl'];
-  }
+  factory Photo.fromRawJson(String str) => Photo.fromJson(json.decode(str));
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['albumId'] = albumId;
-    data['id'] = id;
-    data['title'] = title;
-    data['url'] = url;
-    data['thumbnailUrl'] = thumbnailUrl;
-    return data;
-  }
+  String toRawJson() => json.encode(toJson());
+
+  factory Photo.fromJson(Map<String, dynamic> json) => Photo(
+        albumId: json["albumId"],
+        id: json["id"],
+        title: json["title"],
+        url: json["url"],
+        thumbnailUrl: json["thumbnailUrl"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "albumId": albumId,
+        "id": id,
+        "title": title,
+        "url": url,
+        "thumbnailUrl": thumbnailUrl,
+      };
 }

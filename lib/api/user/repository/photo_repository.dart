@@ -2,62 +2,62 @@ import 'dart:convert';
 
 import 'package:flutter_api_call/api/config/api_constant.dart';
 import 'package:flutter_api_call/api/config/api_helper.dart';
-import 'package:flutter_api_call/api/user/model/user_model.dart';
+import 'package:flutter_api_call/api/user/model/photo_model.dart';
 
 class PhotoRepository {
-  static Future<List<User>> getAllphotos() async {
+  static Future<List<Photo>> getAllphotos() async {
     // await Future.delayed(const Duration(seconds: 2));
     final response = await ApiHelper().getAndSearch(url: 'photos');
     if (response != null) {
-      final userList = <User>[];
+      final photoList = <Photo>[];
       for (var item in response) {
-        userList.add(User.fromJson(item));
+        photoList.add(Photo.fromJson(item));
       }
-      return userList;
+      return photoList;
     } else {
       return [];
     }
   }
 
-  static Future<User?> getOneUser({required id}) async {
+  static Future<Photo?> getOnePhoto({required id}) async {
     // await Future.delayed(const Duration(seconds: 2));
     final response = await ApiHelper().getAndSearch(url: 'photos/$id');
     if (response != null) {
-      return User.fromJson(response);
+      return Photo.fromJson(response);
     } else {
       return null;
     }
   }
 
-  static Future<User?> createUser({required User user}) async {
+  static Future<Photo?> createPhoto({required Photo photo}) async {
     // await Future.delayed(const Duration(seconds: 2));
-    User? returnResponse;
+    Photo? returnResponse;
     final response = await ApiHelper().post(
-        url: 'photos', header: ApiConstant.header, body: jsonEncode(user));
+        url: 'photos', header: ApiConstant.header, body: jsonEncode(photo));
     if (response != null) {
-      returnResponse = User.fromJson(response);
+      returnResponse = Photo.fromJson(response);
       return returnResponse;
     } else {
       return returnResponse;
     }
   }
 
-  static Future<User?> updateUser({required User user, required id}) async {
+  static Future<Photo?> updatePhoto({required Photo photo, required id}) async {
     // await Future.delayed(const Duration(seconds: 2));
-    User? returnResponse;
+    Photo? returnResponse;
     final response = await ApiHelper().put(
-        url: 'photos/$id', header: ApiConstant.header, body: jsonEncode(user));
+        url: 'photos/$id', header: ApiConstant.header, body: jsonEncode(photo));
     if (response != null) {
-      returnResponse = User.fromJson(response);
+      returnResponse = Photo.fromJson(response);
       return returnResponse;
     } else {
       return returnResponse;
     }
   }
 
-  static Future<User?> deleteUser({required User user, required id}) async {
+  static Future<Photo?> deletePhoto({required Photo photo, required id}) async {
     // await Future.delayed(const Duration(seconds: 2));
-    User? returnResponse;
+    Photo? returnResponse;
     final response = await ApiHelper().delete(
       url: 'photos/$id',
       header: ApiConstant.header,
@@ -70,17 +70,17 @@ class PhotoRepository {
     }
   }
 
-  static Future<List<User>> searchUser(
+  static Future<List<Photo>> searchPhoto(
       {required String type, required keyword}) async {
     // await Future.delayed(const Duration(seconds: 2));
     final response =
         await ApiHelper().getAndSearch(url: 'photos?$type=$keyword');
     if (response != null) {
-      final userList = <User>[];
+      final photoList = <Photo>[];
       for (var item in response) {
-        userList.add(User.fromJson(item));
+        photoList.add(Photo.fromJson(item));
       }
-      return userList;
+      return photoList;
     } else {
       return [];
     }

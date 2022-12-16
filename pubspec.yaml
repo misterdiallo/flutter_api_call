@@ -2,6 +2,12 @@ name: flutter_api_call
 description: A new Flutter project.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
+homepage: https://misterdiallo.github.io/flutter_api_call/
+documentation: https://github.com/misterdiallo/flutter_api_call
+# authors: @misterdiallo
+screenshots:
+  - description: 'This screenshot shows how the app works'
+    path: DEMO/flutter_api_call-Misterdiallo.gif
 
 environment:
   sdk: '>=2.18.2 <3.0.0'
@@ -14,6 +20,7 @@ dependencies:
   flutter_form_builder: ^7.7.0
   form_builder_validators: ^8.4.0
   flutter_overlay_loader: ^2.0.0
+  animated_text_kit: ^4.2.2
 
 
 

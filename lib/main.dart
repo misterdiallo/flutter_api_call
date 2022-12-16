@@ -14,9 +14,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter API Call',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme:
+          ThemeData(primarySwatch: Colors.orange, brightness: Brightness.light),
+      themeMode: ThemeMode.dark,
+      darkTheme:
+          ThemeData(primarySwatch: Colors.orange, brightness: Brightness.dark),
       home: const HomePage(),
     );
   }
